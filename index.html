@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Best Friend?</title>
+  <title>Good Friend?</title>
 
   <style>
     body {
@@ -25,7 +25,7 @@
     }
 
     h2 {
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .buttons {
@@ -60,19 +60,37 @@
       background: #ddd;
       color: #555;
       position: absolute;
-      left: 190px; /* initial spacing */
+      left: 190px;
       top: 50%;
       transform: translateY(-50%);
       transition:
         left 0.35s cubic-bezier(.68,-0.55,.27,1.55),
         top 0.35s cubic-bezier(.68,-0.55,.27,1.55);
     }
+
+    /* Result animation */
+    .result img {
+      width: 200px;
+      margin-top: 15px;
+      animation: popIn 0.5s ease;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h2>Will you be my best friend, Reeva? 💕</h2>
+    <h2>Will you be my Good friend, Reeva? 💕</h2>
 
     <div class="buttons">
       <button id="yes" onclick="accepted()">Yes</button>
@@ -117,8 +135,12 @@
     }
 
     function accepted() {
-      document.querySelector(".card").innerHTML =
-        "<h2>Yay! Best friends forever 🥰💖</h2>";
+      document.querySelector(".card").innerHTML = `
+        <div class="result">
+          <h2>Yay! Friends forever 🥰💖</h2>
+          <img src="friend.gif" alt="Friends GIF">
+        </div>
+      `;
     }
   </script>
 
