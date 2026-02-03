@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Best Friend?</title>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    }
+
+    .card {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      width: 340px;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 140px;
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #yes {
+      background: #ff4d79;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255,77,121,0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(255,77,121,0.6);
+    }
+
+    #no {
+      background: #ddd;
+      color: #555;
+      position: absolute;
+      left: 190px; /* initial spacing */
+      top: 50%;
+      transform: translateY(-50%);
+      transition:
+        left 0.35s cubic-bezier(.68,-0.55,.27,1.55),
+        top 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Will you be my best friend, Reeva? 💕</h2>
+
+    <div class="buttons">
+      <button id="yes" onclick="accepted()">Yes</button>
+      <button id="no">No</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const container = document.querySelector(".buttons");
+
+    noBtn.addEventListener("mouseenter", moveNo);
+
+    function moveNo() {
+      const containerRect = container.getBoundingClientRect();
+      const yesRect = yesBtn.getBoundingClientRect();
+
+      const padding = 10;
+      const minDistance = 90;
+
+      let x, y, distance;
+
+      do {
+        x = Math.random() * (containerRect.width - noBtn.offsetWidth - padding);
+        y = Math.random() * (containerRect.height - noBtn.offsetHeight - padding);
+
+        const noCenterX = containerRect.left + x + noBtn.offsetWidth / 2;
+        const noCenterY = containerRect.top + y + noBtn.offsetHeight / 2;
+
+        const yesCenterX = yesRect.left + yesRect.width / 2;
+        const yesCenterY = yesRect.top + yesRect.height / 2;
+
+        distance = Math.hypot(
+          noCenterX - yesCenterX,
+          noCenterY - yesCenterY
+        );
+      } while (distance < minDistance);
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    function accepted() {
+      document.querySelector(".card").innerHTML =
+        "<h2>Yay! Best friends forever 🥰💖</h2>";
+    }
+  </script>
+
+</body>
+</html>
