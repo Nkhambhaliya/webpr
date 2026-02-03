@@ -2,46 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Good Friend?</title>
 
   <style>
     body {
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: "Poppins", sans-serif;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      padding: 20px;
     }
 
     .card {
       background: white;
-      padding: 40px 50px;
+      padding: 30px 25px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      width: 340px;
+      width: 100%;
+      max-width: 380px;
     }
 
     h2 {
       margin-bottom: 25px;
+      font-size: clamp(18px, 5vw, 24px);
     }
 
     .buttons {
       position: relative;
-      height: 140px;
+      height: 160px;
       display: flex;
       align-items: center;
     }
 
     button {
-      padding: 12px 30px;
-      font-size: 16px;
+      padding: 14px 36px;
+      font-size: 18px;
       border: none;
-      border-radius: 30px;
+      border-radius: 40px;
       cursor: pointer;
       white-space: nowrap;
+      touch-action: manipulation;
     }
 
     #yes {
@@ -52,7 +57,7 @@
     }
 
     #yes:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       box-shadow: 0 12px 30px rgba(255,77,121,0.6);
     }
 
@@ -60,7 +65,7 @@
       background: #ddd;
       color: #555;
       position: absolute;
-      left: 190px;
+      left: 200px;
       top: 50%;
       transform: translateY(-50%);
       transition:
@@ -68,9 +73,8 @@
         top 0.35s cubic-bezier(.68,-0.55,.27,1.55);
     }
 
-    /* Result animation */
     .result img {
-      width: 200px;
+      width: min(240px, 80vw);
       margin-top: 15px;
       animation: popIn 0.5s ease;
     }
@@ -83,6 +87,13 @@
       to {
         transform: scale(1);
         opacity: 1;
+      }
+    }
+
+    /* Extra spacing on very small screens */
+    @media (max-width: 360px) {
+      .buttons {
+        height: 180px;
       }
     }
   </style>
@@ -103,16 +114,21 @@
     const yesBtn = document.getElementById("yes");
     const container = document.querySelector(".buttons");
 
-    // Escape on hover
+    // Desktop hover
     noBtn.addEventListener("mouseenter", moveNo);
 
-    // Escape on click
+    // Mobile touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNo();
+    }, { passive: false });
+
+    // Click fallback
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
       moveNo();
     });
 
-    // Yes accepted
     yesBtn.addEventListener("click", accepted);
 
     function moveNo() {
@@ -120,7 +136,7 @@
       const yesRect = yesBtn.getBoundingClientRect();
 
       const padding = 10;
-      const minDistance = 90;
+      const minDistance = 100;
 
       let x, y, distance;
 
